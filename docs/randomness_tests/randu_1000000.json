@@ -1,0 +1,83 @@
+{
+  "source": "randu",
+  "bits": 1000000,
+  "passed": 5,
+  "total": 15,
+  "results": [
+    {
+      "name": "FrequencyTest.monobit_test",
+      "p_value": 0.9952127213588718,
+      "passed": true
+    },
+    {
+      "name": "FrequencyTest.block_frequency",
+      "p_value": 1.0,
+      "passed": true
+    },
+    {
+      "name": "RunTest.run_test",
+      "p_value": 0.9968084989910693,
+      "passed": true
+    },
+    {
+      "name": "RunTest.longest_one_block_test",
+      "p_value": 4.40038449436048e-220,
+      "passed": false
+    },
+    {
+      "name": "Matrix.binary_matrix_rank_text",
+      "p_value": 0.0,
+      "passed": false
+    },
+    {
+      "name": "SpectralTest.spectral_test",
+      "p_value": 0.0,
+      "passed": false
+    },
+    {
+      "name": "TemplateMatching.non_overlapping_test",
+      "p_value": 0.0,
+      "passed": false
+    },
+    {
+      "name": "TemplateMatching.overlapping_patterns",
+      "p_value": 0.0,
+      "passed": false
+    },
+    {
+      "name": "Universal.statistical_test",
+      "p_value": 0.0,
+      "passed": false
+    },
+    {
+      "name": "ComplexityTest.linear_complexity_test",
+      "p_value": 4.407879841957474e-21,
+      "passed": false
+    },
+    {
+      "name": "Serial.serial_test[0]",
+      "p_value": 0.0,
+      "passed": false
+    },
+    {
+      "name": "Serial.serial_test[1]",
+      "p_value": 0.0,
+      "passed": false
+    },
+    {
+      "name": "ApproximateEntropy.approximate_entropy_test",
+      "p_value": 0.0,
+      "passed": false
+    },
+    {
+      "name": "CumulativeSums.forward",
+      "p_value": 0.9999999999999982,
+      "passed": true
+    },
+    {
+      "name": "CumulativeSums.backward",
+      "p_value": 1.0,
+      "passed": true
+    }
+  ]
+}

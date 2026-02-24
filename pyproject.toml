@@ -1,0 +1,80 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "randomrad"
+version = "0.1.0"
+description = "Hardware-backed randomness API driven by external entropy (file/ESP32) with validation pipeline."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+  { name = "Alwin Bestvater" }
+]
+keywords = ["randomness", "entropy", "esp32", "micropython", "nist", "testing"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+]
+
+# Keep base install minimal (file backend only).
+dependencies = []
+
+[project.optional-dependencies]
+# ESP32 serial backend on host
+hw = [
+  "pyserial>=3.5",
+]
+
+# Statistical tests (vendored testsuite depends on these)
+stats = [
+  "numpy>=1.24",
+  "scipy>=1.10",
+]
+
+# Reporting / histograms
+analysis = [
+  "matplotlib>=3.8",
+]
+
+# Dev / unit tests
+dev = [
+  "pytest>=7.0",
+]
+
+# Convenience meta-extra
+all = [
+  "pyserial>=3.5",
+  "numpy>=1.24",
+  "scipy>=1.10",
+  "matplotlib>=3.8",
+  "pytest>=7.0",
+]
+
+[tool.setuptools]
+include-package-data = true
+license-files = ["LICENSE"]
+
+# Only ship the intended packages. Prevent setuptools from treating
+# top-level folders like ESP32/ or entropy/ as packages.
+[tool.setuptools.packages.find]
+include = ["randomrad*", "badprng*"]
+exclude = ["ESP32*", "entropy*"]
+
+# Include non-.py files in the vendored directory (license/markdown).
+# Python modules (*.py) are included automatically as package code.
+[tool.setuptools.package-data]
+randomrad = [
+  "_vendor/randomness_testsuite/LICENSE",
+  "_vendor/randomness_testsuite/*.md",
+]
+
+#testpath
+#dont take tests from nist
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = ["randomrad/_vendor"]
+markers = [
+    "hardware: tests that require real hardware"
+]

@@ -1,0 +1,46 @@
+optional dependencies install
+python -m pip install -e ".[dev]"
+python -m pip install -e ".[analysis]"
+python -m pip install -e ".[stats]"
+
+generate random entropy.bin:
+python -c "import os; os.makedirs('entropy', exist_ok=True); open('entropy/entropy.bin','wb').write(os.urandom(4096))"
+
+run test
+python-m pytest
+
+run test with skip reason
+python -m pytest -rs
+
+test für dump_bitstream (powershell)
+python scripts/dump_bitstream.py --bits 10000 --out rr_10k.bin
+dir rr_10k.bin
+python -c "import os; print(os.path.getsize('rr_10k.bin'))"
+
+histogram erstellen in powershell
+python scripts/histogram_100k.py --out histogram_rr.png
+
+submodule hinzufügen in powershell (dadurch ensteht .gitmodules und external):
+git submodule add https://github.com/stevenang/randomness_testsuite.git external/randomness_testsuite
+git submodule update --init --recursive
+
+Run tests(randomrad / current backend):
+python scripts/run_randomness_testsuite.py --source rr --bits 8192
+oder
+python scripts/run_randomness_testsuite.py --source rr --bits 8192 --json docs/randomness_tests/rr_8192.json
+
+Hardware later in POwershell:
+$env:RANDOMRAD_BACKEND="hw"
+$env:RANDOMRAD_PORT="COM3"
+python scripts/run_randomness_testsuite.py --source rr --bits 1000000 --json docs/randomness_tests/hw_1M.json
+
+Auswertung Testvergleich
+Das ist ein super Beleg in deiner Doku: “Unser Pipeline-Test schlägt bei RANDU deutlich öfter fehl”.
+
+Ein paar kurze Hinweise, damit du’s richtig interpretierst (ohne Overthinking):
+
+p=1.0 oder p≈1.0 ist nicht “super random”, das kann auch heißen “Test ist bei dieser Länge/Struktur nicht sehr aussagekräftig” oder “extremes Ergebnis” – wichtig ist das Gesamtbild.
+
+Serial und ApproximateEntropy bei RANDU mit p=0.0 ist ein sehr starkes Signal.
+
+Universal.statistical_test: p=-1.0 bleibt “nicht anwendbar” bei 8192 Bits (normal).
